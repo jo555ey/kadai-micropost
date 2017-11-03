@@ -1,0 +1,13 @@
+<% unless current_user == user %>
+  <% if current_user.microposting?(user) %>
+    <%= form_for(current_user.favorites.find_by(micropost_id: user.id), html: { method: :delete }) do |f| %>
+      <%= hidden_field_tag :micropost_id, user.id %>
+      <%= f.submit 'Unmicropost', class: 'btn btn-danger btn-block' %>
+    <% end %>
+  <% else %>
+    <%= form_for(current_user.favorites.build) do |f| %>
+      <%= hidden_field_tag :micropost_id, user.id %>
+      <%= f.submit 'Micropost', class: 'btn btn-primary btn-block' %>
+    <% end %>
+  <% end %>
+<% end %>
